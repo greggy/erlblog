@@ -1,0 +1,14 @@
+%% -*- erlang -*-
+{application, erlblog,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  riak_core
+                 ]},
+  {mod, { erlblog_app, []}},
+  {env, []}
+ ]}.

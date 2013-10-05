@@ -1,5 +1,8 @@
-.eunit
-deps
-*.o
 *.beam
-*.plt
+.eunit
+deps/*
+apps/erlblog/ebin
+*~
+dev/*
+doc/*
+rel/erlblog
