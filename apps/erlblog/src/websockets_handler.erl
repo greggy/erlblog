@@ -40,4 +40,22 @@ websocket_info(_Info, Req, State) ->
     {ok, Req, State}.
 
 websocket_terminate(_Reason, _Req, _State) ->
+    Users0 = erlblog:getlist(?USERS),
+    Users1 = users_list(Users0, self()),
+    ok = erlblog:setlist(?USERS, Users1),
     ok.
+
+
+%% @private
+users_list(Users, Pid) ->
+    users_list(Users, [], Pid).
+
+users_list([UserPID | Users0], Users1, Pid) ->
+    case UserPID =:= Pid of
+	true ->
+	    users_list(Users0, Users1, Pid);
+	_ ->
+	    users_list(Users0, [UserPID | Users1], Pid)
+    end;
+users_list([], Users, _) ->
+    Users.

@@ -37,6 +37,12 @@ handle_command({set, Key, Msg}, _Sender, #state{dict=Dict}=State) ->
     ?PRINT({set, Msg, Dict1}),
     {reply, ok, State#state{dict=Dict1}};
 
+handle_command({setlist, Key, Msgs}, _Sender, #state{dict=Dict0}=State) ->
+    Dict1 = dict:erase(Key, Dict0),
+    Dict2 = dict:store(Key, Msgs, Dict1),
+    ?PRINT({setlist, Msgs, Dict2}),
+    {reply, ok, State#state{dict=Dict2}};
+
 handle_command({getlist, Key}, _Sender, #state{dict=Dict}=State) ->
     Data =
 	case dict:find(Key, Dict) of
