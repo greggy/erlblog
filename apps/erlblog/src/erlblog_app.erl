@@ -18,6 +18,7 @@ start(_StartType, _StartArgs) ->
             ok = riak_core_node_watcher:service_up(erlblog, self()),
             %% Start cowboy sup
             ok = erlblog_cowboy_app:start(_StartType, _StartArgs),
+	    ok = lager:start(),
             {ok, Pid};
         {error, Reason} ->
             {error, Reason}
