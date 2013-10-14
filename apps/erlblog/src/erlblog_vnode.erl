@@ -109,11 +109,12 @@ handle_handoff_data(Data, #state{dict=Dict0}=State) ->
     Dict1 = dict:store(Key, Val, Dict0),
     {reply, ok, State#state{dict=Dict1}}.
 
-encode_handoff_item(_ObjectName, _ObjectValue) ->
-    <<>>.
+encode_handoff_item(Key, Value) ->
+    lager:info("VNODE CALL ~p encode_handoff_item gets data: ~p.", [self(), {Key, Value}]),    
+    term_to_binary({Key, Value}).
 
 is_empty(State) ->
-    lager:info("VNODE CALL ~p is_empty executed.", [self()]),
+    lager:info("VNODE CALL ~p is_empty executed and size is ~p.", [self(), dict:size(State#state.dict)]),
     case dict:size(State#state.dict) of
         0 -> {true, State};
         _ -> {false, State}

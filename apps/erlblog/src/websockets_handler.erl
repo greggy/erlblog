@@ -21,6 +21,7 @@ websocket_init(_TransportName, Req, _Opts) ->
     ok = erlblog:set(?USERS, self()),
     erlang:start_timer(1000, self(), <<"Hello!">>),
     Msgs = erlblog:getlist(?ROOM_ID),
+    lager:debug("Gets backup messages:", [Msgs]),
     [erlang:start_timer(1010, self(), Msg) || Msg <- Msgs],
     {ok, Req, undefined_state}.
 
